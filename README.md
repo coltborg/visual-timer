@@ -1,6 +1,10 @@
 # visual-timer
 
-## Project setup
+I want to make a simple web app that is a visual countdown timer, very similiar to [timetimer.com](https://www.timetimer.com/).
+
+## Project Setup Commands
+
+### Install depedencies
 ```
 yarn install
 ```
@@ -29,6 +33,3 @@ yarn run lint
 ```
 yarn run test:unit
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
