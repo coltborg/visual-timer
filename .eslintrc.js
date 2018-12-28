@@ -28,6 +28,7 @@ module.exports = {
     'no-unused-expressions': ['error', { 'allowTernary': true }],
     'no-param-reassign': 0,
     'quote-props': ['error', 'consistent'],
+    'no-return-assign': 'off',
     // vue rules
     "vue/order-in-components": ["error", {
       "order": [
