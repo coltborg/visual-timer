@@ -1,44 +1,61 @@
 <template>
-  <div class="min-h-screen bg-grey-lighter">
-    <h1 class="pt-10 pb-4 text-center text-5xl text-black">
+  <div class="min-h-screen bg-grey-lightest">
+    <h1 class="pt-12 pb-8 text-center text-4xl sm:text-5xl text-black">
       Visual Timer
     </h1>
-    <div class="text-center">
+    <div class="pb-12 text-center">
       <ProgressBar
         :percentage="timeRemainingPercentage"
-        class="w-64 h-64" />
+        class="w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/3 h-full" />
     </div>
-    <h2 class="pb-4 text-center text-xl font-normal text-grey-darker">
-      The time now - {{ now | formatToTime }}
+    <h2
+      v-if="isTimerRunning"
+      class="pb-8 flex justify-center">
+      <div class="">
+        <div class="text-grey-dark text-xs font-semibold uppercase tracking-wide">
+          Time remaining
+        </div>
+        <div class="text-purple text-5xl font-light">
+          {{ displayTimeRemaining }}
+        </div>
+      </div>
     </h2>
-    <h2 class="pb-4 text-center text-xl font-normal text-grey-darker">
-      Is there a timer running? - {{ isTimerRunning }}
-    </h2>
-    <h2 class="pb-6 text-center text-xl font-normal text-grey-darker">
-      The start time of the timer is - {{ startTime | formatToTime }}
-    </h2>
-    <h2 class="pb-6 text-center text-xl font-normal text-grey-darker">
-      The end time of the timer is - {{ finishTime | formatToTime }}
-    </h2>
-    <h2 class="pb-6 text-red text-center text-xl font-normal text-grey-darker">
-      Time remaining - {{ displayTimeRemaining }}
-    </h2>
-    <div class="text-center">
+    <form
+      v-if="!isTimerRunning"
+      action=""
+      class="flex flex-col items-center justify-center"
+      @submit.prevent="handleStartTime">
+      <label>
+        <div class="text-grey-dark text-xs font-semibold uppercase tracking-wide">
+          Interval
+        </div>
+        <input
+          ref="interval"
+          v-model="interval"
+          class="mb-8 py-2 px-4 w-24 bg-grey-lighter appearance-none border-2 border-solid border-grey rounded text-grey-darker text-xl focus:outline-none focus:border-purple"
+          type="number"
+          min="1"
+          max="120">
+      </label>
       <button
-        v-show="!isTimerRunning"
-        class="px-4 py-2 bg-purple text-white rounded hover:bg-purple-dark"
-        type="button"
-        @click="handleStartTime">
+        ref="start"
+        class="py-2 px-4 text-lg rounded shadow text-purple-lightest bg-purple hover:bg-purple-dark focus:bg-purple-dark"
+        type="submit">
         Start
       </button>
+    </form>
+    <form
+      v-show="isTimerRunning"
+      action=""
+      class="text-center"
+      @submit.prevent="handleStopTime">
       <button
-        v-show="isTimerRunning"
-        class="px-4 py-2 bg-red text-white rounded hover:bg-red-dark"
-        type="button"
-        @click="handleStopTime">
+        ref="stop"
+        class="py-2 px-4 text-lg rounded shadow text-grey-dark bg-transparent border border-grey-dark hover:border-grey-darkest hover:text-grey-darkest focus:border-grey-darkest focus:text-grey-darkest"
+        type="submit">
         Stop
       </button>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -105,11 +122,13 @@ export default {
       // This controls the timer amount
       this.finishTime = datefns.addMinutes(this.now, this.interval);
       this.isTimerRunning = true;
+      this.$nextTick(() => this.$refs.stop.focus());
     },
     handleStopTime() {
       this.startTime = null;
       this.finishTime = null;
       this.isTimerRunning = false;
+      this.$nextTick(() => this.$refs.interval.focus());
     },
   },
 };
