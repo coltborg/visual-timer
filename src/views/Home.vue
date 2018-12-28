@@ -15,7 +15,7 @@
         <div class="text-grey-dark text-xs font-semibold uppercase tracking-wide">
           Time remaining
         </div>
-        <div class="text-purple text-5xl font-light">
+        <div class="text-purple text-3xl sm:text-5xl font-light">
           {{ displayTimeRemaining }}
         </div>
       </div>
@@ -83,12 +83,6 @@ export default {
     };
   },
   computed: {
-    timeRemaining() {
-      if (this.isTimerRunning) {
-        return datefns.differenceInSeconds(this.finishTime, this.now);
-      }
-      return 0;
-    },
     displayTimeRemaining() {
       if (this.isTimerRunning) {
         return datefns.distanceInWords(
@@ -97,6 +91,12 @@ export default {
         );
       }
       return `${this.interval} ${this.interval > 1 ? 'minutes' : 'minute'}`;
+    },
+    timeRemaining() {
+      if (this.isTimerRunning) {
+        return datefns.differenceInSeconds(this.finishTime, this.now);
+      }
+      return 0;
     },
     timeRemainingPercentage() {
       return (this.timeRemaining / (this.interval * 60)) * 100;
@@ -109,26 +109,60 @@ export default {
       }
     },
   },
-  created() {
-    this.nowFunc = () => this.now = new Date();
-    this.nowInterval = setInterval(this.nowFunc, 1000);
+  mounted() {
+    this.applyLocal();
+    this.setNow();
   },
   beforeDestroy() {
-    clearInterval(this.nowInterval);
+    this.clearNow();
   },
   methods: {
+    applyLocal() {
+      if (localStorage.startTime) {
+        this.startTime = datefns.parse(localStorage.startTime);
+      }
+      if (localStorage.finishTime) {
+        this.finishTime = datefns.parse(localStorage.finishTime);
+      }
+      if (localStorage.isTimerRunning) {
+        this.isTimerRunning = Boolean(localStorage.isTimerRunning);
+      }
+      if (localStorage.interval) {
+        this.interval = Number(localStorage.interval);
+      }
+    },
+    clearLocal() {
+      localStorage.removeItem('startTime');
+      localStorage.removeItem('finishTime');
+      localStorage.removeItem('isTimerRunning');
+      localStorage.removeItem('interval');
+    },
+    clearNow() {
+      clearInterval(this.nowInterval);
+    },
     handleStartTime() {
       this.startTime = this.now;
-      // This controls the timer amount
       this.finishTime = datefns.addMinutes(this.now, this.interval);
       this.isTimerRunning = true;
+      this.setLocal();
       this.$nextTick(() => this.$refs.stop.focus());
     },
     handleStopTime() {
       this.startTime = null;
       this.finishTime = null;
       this.isTimerRunning = false;
+      this.clearLocal();
       this.$nextTick(() => this.$refs.interval.focus());
+    },
+    setLocal() {
+      localStorage.startTime = this.startTime;
+      localStorage.finishTime = this.finishTime;
+      localStorage.isTimerRunning = this.isTimerRunning;
+      localStorage.interval = this.interval;
+    },
+    setNow() {
+      this.nowFunc = () => this.now = new Date();
+      this.nowInterval = setInterval(this.nowFunc, 1000);
     },
   },
 };
