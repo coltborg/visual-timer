@@ -6,7 +6,7 @@
     <div class="pb-12 text-center">
       <ProgressBar
         :percentage="timeRemainingPercentage"
-        class="w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/3 h-full" />
+        class="w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/4 h-full" />
     </div>
     <h2
       v-if="isTimerRunning"
