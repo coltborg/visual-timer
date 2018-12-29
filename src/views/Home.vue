@@ -15,7 +15,7 @@
         <div class="pb-1 text-xs font-semibold uppercase tracking-wide text-grey-darker">
           Time remaining
         </div>
-        <div class="text-3xl sm:text-5xl text-purple">
+        <div class="font-normal text-3xl sm:text-5xl text-purple">
           {{ displayTimeRemaining }}
         </div>
       </div>
