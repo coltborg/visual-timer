@@ -1,21 +1,21 @@
 <template>
   <div class="min-h-screen bg-grey-lightest">
-    <h1 class="pt-12 pb-8 text-center text-4xl sm:text-5xl text-black">
+    <h1 class="pt-6 pb-10 text-center font-semibold text-5xl sm:text-6xl">
       Visual Timer
     </h1>
-    <div class="pb-12 text-center">
+    <div class="pb-10 text-center">
       <ProgressBar
         :percentage="timeRemainingPercentage"
-        class="w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/4 h-full" />
+        class="w-4/5 sm:w-3/5 md:w-2/5 max-w-sm h-full" />
     </div>
     <h2
       v-if="isTimerRunning"
       class="pb-8 flex justify-center">
       <div class="">
-        <div class="text-grey-dark text-xs font-semibold uppercase tracking-wide">
+        <div class="pb-1 text-xs font-semibold uppercase tracking-wide text-grey-dark">
           Time remaining
         </div>
-        <div class="text-purple text-3xl sm:text-5xl font-light">
+        <div class="text-3xl sm:text-5xl text-purple">
           {{ displayTimeRemaining }}
         </div>
       </div>
@@ -26,7 +26,7 @@
       class="flex flex-col items-center justify-center"
       @submit.prevent="handleStartTime">
       <label>
-        <div class="text-grey-dark text-xs font-semibold uppercase tracking-wide">
+        <div class="pb-1 text-xs font-semibold uppercase tracking-wide text-grey-dark">
           Interval
         </div>
         <input
@@ -39,7 +39,7 @@
       </label>
       <button
         ref="start"
-        class="py-2 px-4 text-lg rounded shadow text-purple-lightest bg-purple hover:bg-purple-dark focus:bg-purple-dark"
+        class="py-2 px-4 text-xl tracking-wide font-light rounded shadow text-purple-lightest bg-purple hover:bg-purple-dark focus:bg-purple-dark"
         type="submit">
         Start
       </button>
@@ -51,7 +51,7 @@
       @submit.prevent="handleStopTime">
       <button
         ref="stop"
-        class="py-2 px-4 text-lg rounded shadow text-grey-dark bg-transparent border border-grey-dark hover:border-grey-darkest hover:text-grey-darkest focus:border-grey-darkest focus:text-grey-darkest"
+        class="py-2 px-4 text-xl tracking-wide font-light rounded shadow text-grey-dark bg-transparent border border-grey-dark hover:border-grey-darkest hover:text-grey-darkest focus:border-grey-darkest focus:text-grey-darkest"
         type="submit">
         Stop
       </button>

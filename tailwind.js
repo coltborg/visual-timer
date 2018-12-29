@@ -196,6 +196,7 @@ module.exports = {
 
   fonts: {
     'sans': [
+      'Muli',
       'system-ui',
       'BlinkMacSystemFont',
       '-apple-system',
@@ -208,26 +209,6 @@ module.exports = {
       'Droid Sans',
       'Helvetica Neue',
       'sans-serif',
-    ],
-    'serif': [
-      'Constantia',
-      'Lucida Bright',
-      'Lucidabright',
-      'Lucida Serif',
-      'Lucida',
-      'DejaVu Serif',
-      'Bitstream Vera Serif',
-      'Liberation Serif',
-      'Georgia',
-      'serif',
-    ],
-    'mono': [
-      'Menlo',
-      'Monaco',
-      'Consolas',
-      'Liberation Mono',
-      'Courier New',
-      'monospace',
     ],
   },
 
@@ -262,6 +243,8 @@ module.exports = {
     '3xl': '1.875rem',  // 30px
     '4xl': '2.25rem',   // 36px
     '5xl': '3rem',      // 48px
+    '6xl': '3.5rem',    // 56px
+    '7xl': '4rem',      // 64px
   },
 
 
