@@ -109,6 +109,15 @@ export default {
         this.notifyTimerComplete();
       }
     },
+    timeRemainingPercentage(newValue) {
+      if (newValue > 0 && newValue <= 25) {
+        this.changeFavicon('/favicon-quarter.ico');
+      } else if (newValue > 25 && newValue <= 50) {
+        this.changeFavicon('/favicon-half.ico');
+      } else if (newValue > 50 && newValue <= 75) {
+        this.changeFavicon('/favicon-three-quarters.ico');
+      }
+    },
   },
   mounted() {
     this.applyLocal();
@@ -133,6 +142,17 @@ export default {
         this.interval = Number(localStorage.interval);
       }
     },
+    changeFavicon(newPath) {
+      const favicon = document.querySelector('link[rel="icon"]');
+      const currentPath = favicon.getAttribute('href');
+
+      // If no update is required, abort
+      if (newPath === currentPath) {
+        return;
+      }
+
+      favicon.setAttribute('href', newPath);
+    },
     clearLocal() {
       localStorage.removeItem('startTime');
       localStorage.removeItem('finishTime');
@@ -147,6 +167,7 @@ export default {
       this.finishTime = datefns.addMinutes(this.now, this.interval);
       this.isTimerRunning = true;
       this.setLocal();
+      this.changeFavicon('/favicon-full.ico');
       this.$nextTick(() => this.$refs.stop.focus());
     },
     handleStopTime() {
@@ -154,6 +175,7 @@ export default {
       this.finishTime = null;
       this.isTimerRunning = false;
       this.clearLocal();
+      this.changeFavicon('/favicon-empty.ico');
       this.$nextTick(() => this.$refs.interval.focus());
     },
     initializeNotify() {
