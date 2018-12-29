@@ -21,13 +21,13 @@
 
 .background {
   fill: none;
-  stroke: var(--path-color, #DAE1E7);
-  stroke-width: var(--path-stroke, 32);
+  stroke: hsl(212, 33%, 89%);
+  stroke-width: 32;
 }
 .bar {
   fill: none;
-  stroke: var(--bar-stroke, #9561E2);
-  stroke-width: var(--path-stroke, 32);
+  stroke: hsl(268, 82%, 60%);
+  stroke-width: 32;
   transition: stroke 1s;
 }
 </style>
