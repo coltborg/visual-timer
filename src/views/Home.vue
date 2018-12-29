@@ -104,14 +104,16 @@ export default {
   },
   watch: {
     timeRemaining(newValue) {
-      if (newValue <= 0) {
+      if (this.isTimerRunning && newValue <= 0) {
         this.handleStopTime();
+        this.notifyTimerComplete();
       }
     },
   },
   mounted() {
     this.applyLocal();
     this.setNow();
+    this.initializeNotify();
   },
   beforeDestroy() {
     this.clearNow();
@@ -153,6 +155,34 @@ export default {
       this.isTimerRunning = false;
       this.clearLocal();
       this.$nextTick(() => this.$refs.interval.focus());
+    },
+    initializeNotify() {
+      // Check if the feature exists
+      if (window.Notification && Notification.permission !== 'denied') {
+        // Only ask for permission for now
+        Notification.requestPermission();
+      }
+    },
+    notifyTimerComplete() {
+      // Check if the feature exists
+      if (window.Notification && Notification.permission !== 'denied') {
+        // Process to do when given permission
+        const process = (permission) => {
+          if (permission === 'granted') {
+            // ok we can show the permission
+            const n = new Notification('⏰ Timer is complete');
+            // autoclose notification
+            setTimeout(n.close(), 4000);
+          }
+        };
+
+        // Ask for permission and then do a process
+        Notification.requestPermission((permission) => {
+          process(permission);
+        }).then((permission) => {
+          process(permission);
+        });
+      }
     },
     setLocal() {
       localStorage.startTime = this.startTime;
