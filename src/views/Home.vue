@@ -56,6 +56,16 @@
         Stop
       </button>
     </form>
+    <a
+      class="m-2 absolute pin-t pin-l"
+      href="https://github.com/coltborg/visual-timer"
+      rel="noopener noreferrer"
+      target="_blank">
+      <img
+        alt="GitHub stars"
+        class=""
+        src="https://img.shields.io/github/stars/coltborg/visual-timer.svg?style=social">
+    </a>
   </div>
 </template>
 
